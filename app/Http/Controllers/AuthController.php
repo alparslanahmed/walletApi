@@ -15,13 +15,18 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-
         $user = User::where('email', $request->get('email'))->first();
 
         if ($user) {
-            return response()->json(['message' => 'User with this email exist.'])->status(409);
+            return response()->json(['message' => 'User with this email exist.'], 409);
         }
 
+        $newUser = User::create([
+            'name' => $request->get('name'),
+            'password' => bcrypt($request->get('password')),
+            'email' => $request->get('email'),
+        ]);
 
+        return response()->json(['message' => 'User created succesfully.']);
     }
 }
