@@ -18,3 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('register', 'AuthController@register');
+
+Route::middleware(['auth:api'])->prefix('transaction')->group(function () {
+    Route::post('summary', 'TransactionController@summary');
+    Route::post('summary', 'TransactionController@summary');
+    Route::post('create', 'TransactionController@create');
+});
+
